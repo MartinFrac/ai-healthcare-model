@@ -23,6 +23,3 @@ Top 3 Disease Probabilities:
 Paralysis (brain hemorrhage): 66.6%
 Allergy: 13.1%
 Impetigo: 4.2%
-
-# Author
-This code was written by Nikita Sisikin.
