@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from flask import Flask, request, jsonify
 
-filename = "../saved models/model.pickle"
+filename = "../saved models/final_model.pickle"
 
 # Load the trained model
 model = pickle.load(open(filename, "rb"))
@@ -42,18 +42,18 @@ def predict_disease(symptoms_list, model=model):
     disease_probs.sort(key=lambda x: x[1], reverse=True)
     
     # Create a formatted string that includes the predicted disease and the list of disease probabilities
-    result_str = "Top 3 Disease Probabilities:\n"
+    disease_array = []
     for disease, prob in disease_probs[:3]:
-        result_str += f"{disease}: {prob * 100:.1f}%\n"
+        disease_array.append(f"{disease}: {prob * 100:.1f}%\n")
     
-    return result_str
+    return disease_array
 
 app = Flask(__name__)
 
 @app.route('/api',methods=['POST'])
 def predict():
     data = request.get_json(force=True)
-    symptoms_array = np.array(data['symptoms'])
+    symptoms_array = data['symptoms']
     disease_probs = predict_disease(symptoms_array)
     print(symptoms_array)
     return jsonify(disease_probs)
